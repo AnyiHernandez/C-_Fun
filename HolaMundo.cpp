@@ -1,16 +1,20 @@
 #include <iostream>
 using namespace std;
-const char *nombre_archivo = "archivo.dat";
+const char *nombre_archivo = "archivo.dat"; 
+//estructura de datos//
 struct Estudiante{
     int edad;
     char nombres[50];
     char apellidos[50];
     int telefono;
 };
+
 void Leer();
 void Crear();
 void borrar();
 void actulizar();
+
+//orden como se ejecutan//
 
 main() {
         Leer();
@@ -20,6 +24,8 @@ main() {
         
         system("pause");
 }
+
+// leer los datos del archivo//
 void Leer(){
 	system("cls");
 	FILE* archivo = fopen(nombre_archivo,"rb");
@@ -27,7 +33,7 @@ void Leer(){
 		archivo = fopen(nombre_archivo,"w+b");
 	}
 	Estudiante estudiante;
-	int id=0; // indice o pocision del registro(fila) dentro del archivo
+	int id=0; 
 	fread(&estudiante,sizeof(Estudiante),1,archivo);
 	cout<<"___________________________________________________"<<endl;
 	cout<<"id"<<"|"<<"edad"<<"|"<<"   nombres  "<<"|"<<"   apellidos   "<<"|"<<" telefono"<<endl;
@@ -35,16 +41,17 @@ void Leer(){
 		cout<<id<<"|"<<estudiante.edad<<"|"<<estudiante.nombres<<"|"<<estudiante.apellidos<<"|"<<estudiante.telefono<<endl;
 		fread(&estudiante,sizeof(Estudiante),1,archivo);
 		id+=1;
-	}while(feof(archivo)==0);
+	}while(feof(archivo)==0); 
 	fclose(archivo);
 }
+// crear los datos del archivo//
 void Crear(){
     FILE* archivo = fopen(nombre_archivo,"a+b");
     char res;
     Estudiante estudiante;
     do
     {
-        fflush(stdin);
+        fflush(stdin); //que sea mas fluida la libreria//
         cout<<"ingrese edad:";
         cin>>estudiante.edad;
         cin.ignore();
@@ -68,7 +75,7 @@ void Crear(){
     fclose(archivo);
     Leer();
 }
-
+// actualizar los datos del archivo//
 void actulizar(){
     FILE* archivo = fopen(nombre_archivo,"r+b");   
     Estudiante estudiante; 
@@ -95,7 +102,7 @@ void actulizar(){
     fclose(archivo);
     Leer();
 }
-
+// borrar un dato del archivo por medio del id//
 void borrar(){
     const char *nombre_archivo_temp = "archivo_temp.dat";
     FILE* archivo_temp = fopen(nombre_archivo_temp,"w+b");
